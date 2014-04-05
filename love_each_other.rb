@@ -60,7 +60,7 @@ class LoveEachOther
   def self.execute(text)
     leo = LoveEachOther.new(text)
     pairs = leo.make_pairs
-    ranked_pairs = pairs.reject{|pair| !pair.any_possibility?}.sort_by{|pair| pair.love_point}
+    ranked_pairs = pairs.select(&:any_possibility?).sort_by(&:love_point)
     fixed_pairs = leo.men.map{|man| ranked_pairs.find{|pair| pair.man_exists?(man) } }
     fixed_pairs.sort.join("\n")
   end
