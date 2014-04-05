@@ -22,11 +22,7 @@ class LoveEachOther
     @women = []
     text.each_line do |line|
       name, names = line.strip.split(':')
-      if name =~ /[A-Z]/
-        @men << Person.new(name, names.split(','))
-      else
-        @women << Person.new(name, names.split(','))
-      end
+      (name =~ /[A-Z]/ ? @men : @women) << Person.new(name, names.split(','))
     end
   end
 
