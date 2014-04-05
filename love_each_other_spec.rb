@@ -24,8 +24,9 @@ D-d
   end
 
   describe "#execute" do
+    subject{ LoveEachOther.new(text).choose_pairs }
     it 'returns valid result' do
-      expect(LoveEachOther.new(text).execute).to eq answer
+      expect(subject.join("\n")).to eq answer
     end
   end
 

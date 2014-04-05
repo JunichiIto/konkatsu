@@ -10,7 +10,7 @@ class LoveEachOther
       .partition(&:man?)
   end
 
-  def execute
+  def choose_pairs
     men.product(women)
       .map{|pair| Pair.new(*pair) }
       .select(&:any_possibility?)
@@ -19,7 +19,6 @@ class LoveEachOther
       .map(&:last)
       .map(&:first)
       .sort
-      .join("\n")
   end
 
   class Person
