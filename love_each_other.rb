@@ -56,7 +56,7 @@ class LoveEachOther
     end
 
     def to_s
-      people.map(&:name).join("-")
+      pair.map(&:name).join("-")
     end
 
     def <=>(other)
@@ -65,12 +65,12 @@ class LoveEachOther
 
     private
 
-    def people
+    def pair
       [man, woman]
     end
 
     def love_points
-      people
+      pair
         .permutation(2)
         .map{|person, other| person.how_much_love_this_person(other)}
     end
