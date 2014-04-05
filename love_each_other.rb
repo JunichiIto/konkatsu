@@ -15,6 +15,28 @@ class Person
   end
 end
 
+class Pair
+  attr_reader :man, :woman
+
+  def initialize(man, woman)
+    @man = man
+    @woman = woman
+  end
+
+  def love_point
+    raise "no possibility" unless any_possibility?
+    man.how_much_love_me(@woman) + woman.how_much_love_me(@man)
+  end
+
+  def any_possibility?
+    ![man.how_much_love_me(woman), woman.how_much_love_me(man)].any?(&:nil?)
+  end
+
+  def to_s
+    "#{man.name}-#{woman.name}"
+  end
+end
+
 class LoveEachOther
   attr_reader :men, :women
   def initialize(text)
@@ -34,18 +56,18 @@ class LoveEachOther
   end
 
   def meet_each_other
-    @result = men.product(women).map do |man, woman|
-      [[man.how_much_love_me(woman), woman.how_much_love_me(man)], [man, woman]]
+    @pairs = men.product(women).map do |man, woman|
+      Pair.new(man, woman)
     end
   end
 
   def rank
-    @rank_result = @result.reject{|indicies, people| indicies.any?(&:nil?)}.sort_by{|indices, people| indices.inject(:+)}
+    @rank_result = @pairs.reject{|pair| !pair.any_possibility?}.sort_by{|pair| pair.love_point}
   end
 
   def format_rank
     @men.map { |man|
-      @rank_result.find{|_, people| people.first.name == man.name}
-    }.map { |_, people| people.join('-') }.sort.join("\n")
+      @rank_result.find{|pair| pair.man.name == man.name}
+    }.map { |pair| pair.to_s }.sort.join("\n")
   end
 end
