@@ -13,7 +13,10 @@ class LoveEachOther
   def execute
     pairs = men.product(women).map {|pair| Pair.new(*pair) }
     ranked_pairs = pairs.select(&:any_possibility?).sort_by(&:love_point)
+
+    # Not smart!!
     fixed_pairs = men.map{|man| ranked_pairs.find{|pair| pair.man == man } }
+
     fixed_pairs.sort.join("\n")
   end
 
@@ -21,8 +24,7 @@ class LoveEachOther
     attr_reader :name
 
     def initialize(name, names_i_like)
-      @name = name
-      @names_i_like = names_i_like
+      @name, @names_i_like = name, names_i_like
     end
 
     def how_much_love_me(other)
@@ -46,8 +48,7 @@ class LoveEachOther
     attr_reader :man, :woman
 
     def initialize(man, woman)
-      @man = man
-      @woman = woman
+      @man, @woman = man, woman
     end
 
     def love_point
