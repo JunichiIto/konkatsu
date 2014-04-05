@@ -57,17 +57,10 @@ class LoveEachOther
     end
   end
 
-  def self.execute(text)
-    leo = LoveEachOther.new(text)
-    pairs = leo.make_pairs
+  def execute
+    pairs = men.product(women).map {|pair| Pair.new *pair}
     ranked_pairs = pairs.select(&:any_possibility?).sort_by(&:love_point)
-    fixed_pairs = leo.men.map{|man| ranked_pairs.find{|pair| pair.man_exists?(man) } }
+    fixed_pairs = men.map{|man| ranked_pairs.find{|pair| pair.man_exists?(man) } }
     fixed_pairs.sort.join("\n")
-  end
-
-  def make_pairs
-    men.product(women).map do |man, woman|
-      Pair.new(man, woman)
-    end
   end
 end

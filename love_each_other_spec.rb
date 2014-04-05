@@ -2,7 +2,7 @@ require './love_each_other.rb'
 
 describe LoveEachOther do
   let(:text) do
-    txt = <<EOF
+    <<-EOF.strip
 A:c,b,a
 B:a,b,d
 C:a,c,b
@@ -11,30 +11,21 @@ a:A,C,D
 b:D,A,B
 c:B,A,C
 d:D,C,A
-EOF
-    txt.strip
+    EOF
   end
+
   let(:answer) do
-    ans = <<EOF
+    <<-EOF.strip
 A-c
 B-b
 C-a
 D-d
-EOF
-    ans.strip
+    EOF
   end
-  describe '#initialize' do
-    let(:leo) { LoveEachOther.new(text) }
-    it 'men count' do
-      expect(leo.men.count).to eq 4
-    end
-    it 'women count' do
-      expect(leo.women.count).to eq 4
-    end
-  end
-  describe "::execute" do
+
+  describe "#execute" do
     it 'returns valid result' do
-      expect(LoveEachOther.execute(text)).to eq answer
+      expect(LoveEachOther.new(text).execute).to eq answer
     end
   end
 end
