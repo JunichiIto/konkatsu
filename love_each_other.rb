@@ -72,7 +72,9 @@ class LoveEachOther
     private
 
     def love_points
-      [man.how_much_love_this_person(woman), woman.how_much_love_this_person(man)]
+      [man, woman]
+        .permutation(2)
+        .map{|person, other| person.how_much_love_this_person(other)}
     end
   end
 end
