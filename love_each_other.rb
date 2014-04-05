@@ -11,7 +11,7 @@ class LoveEachOther
   end
 
   def execute
-    pairs = men.product(women).map {|pair| Pair.new(*pair) }
+    pairs = men.product(women).map{|pair| Pair.new(*pair) }
     ranked_pairs = pairs.select(&:any_possibility?).sort_by(&:love_point)
 
     # Not smart!!
@@ -27,7 +27,7 @@ class LoveEachOther
       @name, @names_i_like = name, names_i_like
     end
 
-    def how_much_love_me(other)
+    def how_much_love_this_person(other)
       @names_i_like.index(other.name)
     end
 
@@ -70,7 +70,7 @@ class LoveEachOther
     private
 
     def love_points
-      [man.how_much_love_me(woman), woman.how_much_love_me(man)]
+      [man.how_much_love_this_person(woman), woman.how_much_love_this_person(man)]
     end
   end
 end
