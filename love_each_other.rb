@@ -1,6 +1,6 @@
 class LoveEachOther
   def self.choose_pairs(text)
-    men, women = parse_pairs(text)
+    men, women = parse_people(text)
 
     men.product(women)
       .map{|pair| Pair.new(*pair) }
@@ -12,7 +12,7 @@ class LoveEachOther
       .sort
   end
 
-  def self.parse_pairs(text)
+  def self.parse_people(text)
     text.each_line
       .map(&:strip)
       .map{|line| line.split(':')}
