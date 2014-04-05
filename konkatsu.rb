@@ -8,7 +8,7 @@ class Konkatsu
       .each_slice(2)
       .flat_map{|men, women| men.product(women) }
       .map{|pair| Pair.new(*pair) }
-      .select(&:any_possibility?)
+      .reject(&:no_possibility?)
       .sort_by(&:love_point)
       .group_by(&:man)
       .values
@@ -51,8 +51,8 @@ class Konkatsu
       love_points.inject(:+)
     end
 
-    def any_possibility?
-      love_points.none?(&:nil?)
+    def no_possibility?
+      love_points.any?(&:nil?)
     end
 
     def to_s
