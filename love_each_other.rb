@@ -1,15 +1,11 @@
 class LoveEachOther
-  attr_reader :men, :women
-
-  def initialize(text)
-    @men, @women = text.each_line
+  def self.choose_pairs(text)
+    men, women = text.each_line
       .map(&:strip)
       .map{|line| line.split(':')}
       .map{|name, names| Person.new(name, names.split(","))}
       .partition(&:man?)
-  end
 
-  def choose_pairs
     men.product(women)
       .map{|pair| Pair.new(*pair) }
       .select(&:any_possibility?)
