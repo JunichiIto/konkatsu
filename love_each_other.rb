@@ -5,8 +5,7 @@ class LoveEachOther
     @men, @women = text.each_line
       .map(&:strip)
       .map{|line| line.split(':')}
-      .map{|name, names| [name, names.split(':')]}
-      .map{|name, names| Person.new(name, *names)}
+      .map{|name, names| Person.new(name, names.split(","))}
       .partition(&:man?)
   end
 
