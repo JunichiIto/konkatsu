@@ -32,12 +32,11 @@ class Pair
   end
 
   def love_point
-    raise "no possibility" unless any_possibility?
-    man.how_much_love_me(@woman) + woman.how_much_love_me(@man)
+    love_points.inject(:+)
   end
 
   def any_possibility?
-    ![man.how_much_love_me(woman), woman.how_much_love_me(man)].any?(&:nil?)
+    !love_points.any?(&:nil?)
   end
 
   def to_s
@@ -46,6 +45,12 @@ class Pair
 
   def <=>(other)
     self.to_s <=> other.to_s
+  end
+
+  private
+
+  def love_points
+    [man.how_much_love_me(woman), woman.how_much_love_me(man)]
   end
 end
 
