@@ -16,7 +16,8 @@ class LoveEachOther
       .select(&:any_possibility?)
       .sort_by(&:love_point)
       .group_by(&:man)
-      .map{|_, pairs| pairs.first }
+      .map(&:last)
+      .map(&:first)
       .sort
       .join("\n")
   end
