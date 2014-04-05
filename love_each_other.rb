@@ -1,13 +1,13 @@
 class Person
   attr_reader :name
 
-  def initialize(name, people_i_like)
+  def initialize(name, names_i_like)
     @name = name
-    @people_i_like = people_i_like
+    @names_i_like = names_i_like
   end
 
   def how_much_love_me(other)
-    @people_i_like.index(other.name)
+    @names_i_like.index(other.name)
   end
 
   def to_s
