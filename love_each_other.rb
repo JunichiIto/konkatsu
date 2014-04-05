@@ -1,10 +1,6 @@
 class LoveEachOther
   def self.choose_pairs(text)
-    men, women = text.each_line
-      .map(&:strip)
-      .map{|line| line.split(':')}
-      .map{|name, names| Person.new(name, names.split(","))}
-      .partition(&:man?)
+    men, women = parse_pairs(text)
 
     men.product(women)
       .map{|pair| Pair.new(*pair) }
@@ -14,6 +10,14 @@ class LoveEachOther
       .map(&:last)
       .map(&:first)
       .sort
+  end
+
+  def self.parse_pairs(text)
+    text.each_line
+      .map(&:strip)
+      .map{|line| line.split(':')}
+      .map{|name, names| Person.new(name, names.split(","))}
+      .partition(&:man?)
   end
 
   class Person
