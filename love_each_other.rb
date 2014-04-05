@@ -58,7 +58,7 @@ class LoveEachOther
     end
 
     def any_possibility?
-      !love_points.any?(&:nil?)
+      love_points.none?(&:nil?)
     end
 
     def to_s
