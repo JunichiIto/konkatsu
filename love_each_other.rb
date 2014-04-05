@@ -11,12 +11,14 @@ class LoveEachOther
   end
 
   def execute
-    pairs = men.product(women).map{|pair| Pair.new(*pair) }
-    ranked_pairs = pairs.select(&:any_possibility?).sort_by(&:love_point)
-
-    fixed_pairs = ranked_pairs.group_by{|pair| pair.man }.map{|_, pairs| pairs.first }
-
-    fixed_pairs.sort.join("\n")
+    men.product(women)
+      .map{|pair| Pair.new(*pair) }
+      .select(&:any_possibility?)
+      .sort_by(&:love_point)
+      .group_by(&:man)
+      .map{|_, pairs| pairs.first }
+      .sort
+      .join("\n")
   end
 
   class Person
