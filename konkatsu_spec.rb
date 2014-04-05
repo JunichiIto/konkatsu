@@ -1,6 +1,6 @@
-require './love_each_other.rb'
+require './konkatsu.rb'
 
-describe LoveEachOther do
+describe Konkatsu do
   let(:text) do
     <<-EOF.strip
 A:c,b,a
@@ -24,7 +24,7 @@ D-d
   end
 
   describe "#execute" do
-    subject{ LoveEachOther.choose_pairs(text) }
+    subject{ Konkatsu.choose_pairs(text) }
     it 'returns valid result' do
       expect(subject.join("\n")).to eq answer
     end

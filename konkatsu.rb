@@ -1,4 +1,4 @@
-class LoveEachOther
+class Konkatsu
   def self.choose_pairs(text)
     text.each_line
       .map(&:strip)
