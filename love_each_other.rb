@@ -15,8 +15,8 @@ class LoveEachOther
   def self.parse_people(text)
     text.each_line
       .map(&:strip)
-      .map{|line| line.split(':')}
-      .map{|name, names| Person.new(name, names.split(","))}
+      .map{|line| line.split(":") }
+      .map{|name, names| Person.new(name, names.split(",")) }
       .partition(&:man?)
   end
 
@@ -76,7 +76,7 @@ class LoveEachOther
     def love_points
       pair
         .permutation(2)
-        .map{|person, other| person.how_much_love_this_person(other)}
+        .map{|person, other| person.how_much_love_this_person(other) }
     end
   end
 end
