@@ -1,6 +1,22 @@
 require './love_each_other.rb'
 
 describe LoveEachOther do
+  let(:text_2) do
+    <<-EOF.strip
+A:c,a,b
+B:c,f,a
+C:f,c,b
+D:d,d,d
+E:
+F:e,c,a
+a:A,D,F
+b:C,B,A
+c:D,A,C
+d:A,A,B
+e:C,A,E
+f:D,B,A
+    EOF
+  end
   let(:text) do
     <<-EOF.strip
 A:c,b,a
