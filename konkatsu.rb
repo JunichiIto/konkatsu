@@ -1,8 +1,7 @@
 class Konkatsu
   def self.choose_pairs(text)
     text.each_line
-      .map(&:strip)
-      .map{|line| line.split(":") }
+      .map{|line| line.strip.split(":") }
       .map{|name, names| Person.new(name, names.split(",")) }
       .partition(&:man?)
       .each_slice(2)
