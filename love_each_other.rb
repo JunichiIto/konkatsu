@@ -2,12 +2,10 @@ class LoveEachOther
   attr_reader :men, :women
 
   def initialize(text)
-    people = text.each_line.map do |line|
+    @men, @women = text.each_line.map {|line|
       name, names = line.strip.split(':')
       Person.new(name, names.split(','))
-    end
-    @men = people.select(&:man?)
-    @women = people - men
+    }.partition(&:man?)
   end
 
   def execute
