@@ -14,8 +14,7 @@ class LoveEachOther
     pairs = men.product(women).map{|pair| Pair.new(*pair) }
     ranked_pairs = pairs.select(&:any_possibility?).sort_by(&:love_point)
 
-    # Not smart!!
-    fixed_pairs = men.map{|man| ranked_pairs.find{|pair| pair.man == man } }
+    fixed_pairs = ranked_pairs.group_by{|pair| pair.man }.map{|_, pairs| pairs.first }
 
     fixed_pairs.sort.join("\n")
   end
