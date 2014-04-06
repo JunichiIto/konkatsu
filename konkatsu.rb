@@ -44,8 +44,6 @@ class Konkatsu
   end
 
   class Pair
-    attr_reader :man, :woman
-
     def initialize(man, woman)
       @man, @woman = man, woman
       @fixed = false
@@ -83,7 +81,7 @@ class Konkatsu
     private
 
     def pair
-      [man, woman]
+      [@man, @woman]
     end
 
     def permutated_pair
