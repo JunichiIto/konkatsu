@@ -9,7 +9,7 @@ class Konkatsu
       .map{|pair| Pair.new(pair) }
       .reject(&:no_possibility?)
       .sort_by(&:love_point)
-      .select{|pair| pair.fix! if pair.both_single? }
+      .select(&:fix_if_can!)
       .sort
   end
 
@@ -55,12 +55,8 @@ class Konkatsu
       love_points.any?(&:nil?)
     end
 
-    def fix!
-      permutated_pairs.each{|person, other| person.relate!(other) }
-    end
-
-    def both_single?
-      @pair.none?(&:in_relationship?)
+    def fix_if_can!
+      permutated_pairs.each{|person, other| person.relate!(other) } if both_single?
     end
 
     def to_s
@@ -75,6 +71,10 @@ class Konkatsu
 
     def love_points
       permutated_pairs.map{|person, other| person.how_much_love_this_person(other) }
+    end
+
+    def both_single?
+      @pair.none?(&:in_relationship?)
     end
 
     def permutated_pairs
