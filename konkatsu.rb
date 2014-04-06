@@ -70,8 +70,9 @@ class Konkatsu
 
     def fix!
       @fixed = true
-      man.you_got_partner!(woman)
-      woman.you_got_partner!(man)
+      pair
+        .permutation(2)
+        .each{|person, other| person.you_got_partner!(other) }
     end
 
     def both_no_partner?
