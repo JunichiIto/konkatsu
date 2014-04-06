@@ -69,10 +69,10 @@ class Konkatsu
     end
 
     def fix!
-      @fixed = true
       pair
         .permutation(2)
         .each{|person, other| person.relate!(other) }
+      @fixed = true
     end
 
     def both_single?
