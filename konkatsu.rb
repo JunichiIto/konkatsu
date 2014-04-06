@@ -1,6 +1,6 @@
 class Konkatsu
   def self.choose_pairs(text)
-    text.each_line
+    x=text.each_line
       .map{|line| line.strip.split(":") }
       .map{|name, names| Person.new(name, names.split(",")) }
       .partition(&:man?)
@@ -9,9 +9,8 @@ class Konkatsu
       .map{|pair| Pair.new(*pair) }
       .reject(&:no_possibility?)
       .sort_by(&:love_point)
-      .group_by(&:man)
-      .values
-      .map(&:first)
+      .map {|pair| pair.fix! if pair.both_no_partner?; pair }
+      .select(&:fixed?)
       .sort
   end
 
@@ -20,10 +19,19 @@ class Konkatsu
 
     def initialize(name, names_i_like)
       @name, @names_i_like = name, names_i_like
+      @partner = nil
     end
 
     def how_much_love_this_person(other)
       @names_i_like.index(other.name)
+    end
+
+    def you_got_partner!(partner)
+      @partner = partner
+    end
+
+    def got_partner?
+      @partner
     end
 
     def man?
@@ -44,6 +52,7 @@ class Konkatsu
 
     def initialize(man, woman)
       @man, @woman = man, woman
+      @fixed = false
     end
 
     def love_point
@@ -52,6 +61,20 @@ class Konkatsu
 
     def no_possibility?
       love_points.any?(&:nil?)
+    end
+
+    def fixed?
+      @fixed
+    end
+
+    def fix!
+      @fixed = true
+      man.you_got_partner!(woman)
+      woman.you_got_partner!(man)
+    end
+
+    def both_no_partner?
+      pair.none?(&:got_partner?)
     end
 
     def to_s
