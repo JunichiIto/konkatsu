@@ -69,9 +69,7 @@ class Konkatsu
     end
 
     def fix!
-      pair
-        .permutation(2)
-        .each{|person, other| person.relate!(other) }
+      permutated_pair.each{|person, other| person.relate!(other) }
       @fixed = true
     end
 
@@ -93,10 +91,12 @@ class Konkatsu
       [man, woman]
     end
 
+    def permutated_pair
+      pair.permutation(2)
+    end
+
     def love_points
-      pair
-        .permutation(2)
-        .map{|person, other| person.how_much_love_this_person(other) }
+      permutated_pair.map{|person, other| person.how_much_love_this_person(other) }
     end
   end
 end
