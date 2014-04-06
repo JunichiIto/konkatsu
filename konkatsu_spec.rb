@@ -46,4 +46,19 @@ e:C,A,E
 f:D,B,A
     EOF
   end
+
+  let(:answer_2) do
+    <<-EOF.strip
+A-a
+B-f
+C-b
+    EOF
+  end
+
+  describe "#execute" do
+    subject{ Konkatsu.choose_pairs(text_2) }
+    it 'returns valid result' do
+      expect(subject.join("\n")).to eq answer_2
+    end
+  end
 end
