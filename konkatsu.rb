@@ -60,7 +60,7 @@ class Konkatsu
     end
 
     def to_s
-      @pair.map(&:name).join(?-)
+      @pair.join(?-)
     end
 
     def <=>(other)
