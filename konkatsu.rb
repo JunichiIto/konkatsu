@@ -10,7 +10,7 @@ class Konkatsu
       .map{|pair| Pair.new(*pair) }
       .reject(&:no_possibility?)
       .sort_by(&:love_point)
-      .each{|pair| pair.fix! if pair.both_no_partner? }
+      .each{|pair| pair.fix! if pair.both_single? }
       .select(&:fixed?)
       .sort
   end
@@ -27,11 +27,11 @@ class Konkatsu
       @names_i_like.index(other.name)
     end
 
-    def you_got_partner!(partner)
+    def relate!(partner)
       @partner = partner
     end
 
-    def got_partner?
+    def in_relationship?
       @partner
     end
 
@@ -72,11 +72,11 @@ class Konkatsu
       @fixed = true
       pair
         .permutation(2)
-        .each{|person, other| person.you_got_partner!(other) }
+        .each{|person, other| person.relate!(other) }
     end
 
-    def both_no_partner?
-      pair.none?(&:got_partner?)
+    def both_single?
+      pair.none?(&:in_relationship?)
     end
 
     def to_s
