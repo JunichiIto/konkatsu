@@ -5,13 +5,14 @@ describe Konkatsu do
   describe "#choose_pairs" do
     shared_examples "valid result" do
       it "returns valid result" do
-        expect(Konkatsu.choose_pairs(text).join("\n")).to eq answer
+        stripped_text, stripped_answer = [text, answer].map(&:unindent).map(&:strip)
+        expect(Konkatsu.choose_pairs(stripped_text).join("\n")).to eq stripped_answer
       end
     end
     context "queston 1" do
       it_behaves_like "valid result" do
         let(:text) do
-          <<-EOF.unindent.strip
+          <<-EOF
             A:c,b,a
             B:a,b,d
             C:a,c,b
@@ -23,7 +24,7 @@ describe Konkatsu do
           EOF
         end
         let(:answer) do
-          <<-EOF.unindent.strip
+          <<-EOF
             A-c
             B-b
             C-a
@@ -35,7 +36,7 @@ describe Konkatsu do
     context "question 2" do
       it_behaves_like "valid result" do
         let(:text) do
-          <<-EOF.unindent.strip
+          <<-EOF
             A:c,a,b
             B:c,f,a
             C:f,c,b
@@ -51,7 +52,7 @@ describe Konkatsu do
           EOF
         end
         let(:answer) do
-          <<-EOF.unindent.strip
+          <<-EOF
             A-a
             B-f
             C-b
