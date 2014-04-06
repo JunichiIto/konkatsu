@@ -6,7 +6,7 @@ class Konkatsu
       .partition(&:man?)
       .each_slice(2)
       .flat_map{|men, women| men.product(women) }
-      .map{|pair| Pair.new(*pair) }
+      .map{|pair| Pair.new(pair) }
       .reject(&:no_possibility?)
       .sort_by(&:love_point)
       .each{|pair| pair.fix! if pair.both_single? }
@@ -44,8 +44,8 @@ class Konkatsu
   end
 
   class Pair
-    def initialize(man, woman)
-      @man, @woman = man, woman
+    def initialize(pair)
+      @pair = pair
       @fixed = false
     end
 
@@ -57,21 +57,21 @@ class Konkatsu
       love_points.any?(&:nil?)
     end
 
+    def fix!
+      permutated_pairs.each{|person, other| person.relate!(other) }
+      @fixed = true
+    end
+
     def fixed?
       @fixed
     end
 
-    def fix!
-      permutated_pair.each{|person, other| person.relate!(other) }
-      @fixed = true
-    end
-
     def both_single?
-      pair.none?(&:in_relationship?)
+      @pair.none?(&:in_relationship?)
     end
 
     def to_s
-      pair.map(&:name).join("-")
+      @pair.map(&:name).join("-")
     end
 
     def <=>(other)
@@ -80,16 +80,12 @@ class Konkatsu
 
     private
 
-    def pair
-      [@man, @woman]
-    end
-
-    def permutated_pair
-      pair.permutation(2)
+    def permutated_pairs
+      @pair.permutation(2)
     end
 
     def love_points
-      permutated_pair.map{|person, other| person.how_much_love_this_person(other) }
+      permutated_pairs.map{|person, other| person.how_much_love_this_person(other) }
     end
   end
 end
