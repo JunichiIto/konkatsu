@@ -10,7 +10,7 @@ class Konkatsu
       .map{|pair| Pair.new(*pair) }
       .reject(&:no_possibility?)
       .sort_by(&:love_point)
-      .map {|pair| pair.fix! if pair.both_no_partner?; pair }
+      .each{|pair| pair.fix! if pair.both_no_partner? }
       .select(&:fixed?)
       .sort
   end
