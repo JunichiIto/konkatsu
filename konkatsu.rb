@@ -1,8 +1,8 @@
 class Konkatsu
   def self.choose_pairs(text)
     text.each_line
-      .map{|line| line.strip.split(":", 2) }
-      .map{|name, names| Person.new(name, names.split(",")) }
+      .map{|line| line.strip.split(?:, 2) }
+      .map{|name, names| Person.new(name, names.split(?,)) }
       .partition(&:man?)
       .each_slice(2)
       .flat_map{|men, women| men.product(women) }
@@ -64,7 +64,7 @@ class Konkatsu
     end
 
     def to_s
-      @pair.map(&:name).join("-")
+      @pair.map(&:name).join(?-)
     end
 
     def <=>(other)
