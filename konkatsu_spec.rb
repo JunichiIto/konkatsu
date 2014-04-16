@@ -60,5 +60,26 @@ describe Konkatsu do
         end
       end
     end
+    context "question 3" do
+      it_behaves_like "valid result" do
+        let(:text) do
+          <<-EOF
+            A:d,b
+            B:
+            C:
+            D:a,d,b
+            a:
+            b:
+            c:
+            d:C,D,A
+          EOF
+        end
+        let(:answer) do
+          <<-EOF
+            D-d
+          EOF
+        end
+      end
+    end
   end
 end
