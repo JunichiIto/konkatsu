@@ -76,7 +76,7 @@ describe Konkatsu do
         end
         let(:answer) do
           <<-EOF
-            D-d
+            A-d
           EOF
         end
       end
